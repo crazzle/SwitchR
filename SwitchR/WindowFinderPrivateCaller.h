@@ -1,6 +1,6 @@
 //
 //  WindowFinderPrivateCaller.h
-//  supperactive
+//  SwitchR
 //
 //  Created by Mark Keinhörster on 27.02.21.
 //

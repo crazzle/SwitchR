@@ -1,6 +1,6 @@
 //
 //  WindowFinder.swift
-//  supperactive
+//  SwitchR
 //
 //  Created by Mark Keinhörster on 21.02.21.
 //
