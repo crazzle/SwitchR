@@ -4,6 +4,9 @@
 //
 //  Created by Mark Keinhörster on 27.02.21.
 //
+//  Inspiration for and usage of "_AXUIElementGetWindow" by "Silica":
+//  https://github.com/ianyh/Silica
+//  Thanks!
 
 #import <Foundation/Foundation.h>
 #import <Carbon/Carbon.h>
