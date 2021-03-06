@@ -3,16 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4DC2C44225F41269005F55D0 /* SwitchRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C44125F41269005F55D0 /* SwitchRApp.swift */; };
-		4DC2C44425F41269005F55D0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C44325F41269005F55D0 /* ContentView.swift */; };
 		4DC2C44625F4126F005F55D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC2C44525F4126F005F55D0 /* Assets.xcassets */; };
 		4DC2C44925F4126F005F55D0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC2C44825F4126F005F55D0 /* Preview Assets.xcassets */; };
 		4DC2C45525F41270005F55D0 /* SwitchRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C45425F41270005F55D0 /* SwitchRTests.swift */; };
-		4DC2C46025F41270005F55D0 /* SwitchRUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C45F25F41270005F55D0 /* SwitchRUITests.swift */; };
+		4DC2C47825F412D1005F55D0 /* WindowFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C47525F412D1005F55D0 /* WindowFinder.swift */; };
+		4DC2C47925F412D1005F55D0 /* WindowFinderPrivateCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2C47725F412D1005F55D0 /* WindowFinderPrivateCaller.m */; };
+		4DC2C47F25F4132B005F55D0 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC2C47E25F4132B005F55D0 /* HotKey */; };
+		4DC2C48525F41344005F55D0 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC2C48425F41344005F55D0 /* RxSwift */; };
+		4DC2C48725F41344005F55D0 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 4DC2C48625F41344005F55D0 /* RxRelay */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +38,6 @@
 /* Begin PBXFileReference section */
 		4DC2C43E25F41269005F55D0 /* SwitchR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwitchR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC2C44125F41269005F55D0 /* SwitchRApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRApp.swift; sourceTree = "<group>"; };
-		4DC2C44325F41269005F55D0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4DC2C44525F4126F005F55D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DC2C44825F4126F005F55D0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4DC2C44A25F4126F005F55D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -44,8 +46,10 @@
 		4DC2C45425F41270005F55D0 /* SwitchRTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRTests.swift; sourceTree = "<group>"; };
 		4DC2C45625F41270005F55D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DC2C45B25F41270005F55D0 /* SwitchRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DC2C45F25F41270005F55D0 /* SwitchRUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRUITests.swift; sourceTree = "<group>"; };
-		4DC2C46125F41270005F55D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DC2C47325F412D0005F55D0 /* SwitchR-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwitchR-Bridging-Header.h"; sourceTree = "<group>"; };
+		4DC2C47425F412D1005F55D0 /* WindowFinderPrivateCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowFinderPrivateCaller.h; sourceTree = "<group>"; };
+		4DC2C47525F412D1005F55D0 /* WindowFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowFinder.swift; sourceTree = "<group>"; };
+		4DC2C47725F412D1005F55D0 /* WindowFinderPrivateCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowFinderPrivateCaller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC2C48725F41344005F55D0 /* RxRelay in Frameworks */,
+				4DC2C48525F41344005F55D0 /* RxSwift in Frameworks */,
+				4DC2C47F25F4132B005F55D0 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +85,6 @@
 			children = (
 				4DC2C44025F41269005F55D0 /* SwitchR */,
 				4DC2C45325F41270005F55D0 /* SwitchRTests */,
-				4DC2C45E25F41270005F55D0 /* SwitchRUITests */,
 				4DC2C43F25F41269005F55D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,11 +103,14 @@
 			isa = PBXGroup;
 			children = (
 				4DC2C44125F41269005F55D0 /* SwitchRApp.swift */,
-				4DC2C44325F41269005F55D0 /* ContentView.swift */,
 				4DC2C44525F4126F005F55D0 /* Assets.xcassets */,
 				4DC2C44A25F4126F005F55D0 /* Info.plist */,
 				4DC2C44B25F4126F005F55D0 /* SwitchR.entitlements */,
+				4DC2C47525F412D1005F55D0 /* WindowFinder.swift */,
+				4DC2C47425F412D1005F55D0 /* WindowFinderPrivateCaller.h */,
+				4DC2C47725F412D1005F55D0 /* WindowFinderPrivateCaller.m */,
 				4DC2C44725F4126F005F55D0 /* Preview Content */,
+				4DC2C47325F412D0005F55D0 /* SwitchR-Bridging-Header.h */,
 			);
 			path = SwitchR;
 			sourceTree = "<group>";
@@ -123,15 +132,6 @@
 			path = SwitchRTests;
 			sourceTree = "<group>";
 		};
-		4DC2C45E25F41270005F55D0 /* SwitchRUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4DC2C45F25F41270005F55D0 /* SwitchRUITests.swift */,
-				4DC2C46125F41270005F55D0 /* Info.plist */,
-			);
-			path = SwitchRUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,6 +148,11 @@
 			dependencies = (
 			);
 			name = SwitchR;
+			packageProductDependencies = (
+				4DC2C47E25F4132B005F55D0 /* HotKey */,
+				4DC2C48425F41344005F55D0 /* RxSwift */,
+				4DC2C48625F41344005F55D0 /* RxRelay */,
+			);
 			productName = SwitchR;
 			productReference = 4DC2C43E25F41269005F55D0 /* SwitchR.app */;
 			productType = "com.apple.product-type.application";
@@ -199,6 +204,7 @@
 				TargetAttributes = {
 					4DC2C43D25F41269005F55D0 = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 					4DC2C44F25F41270005F55D0 = {
 						CreatedOnToolsVersion = 12.4;
@@ -219,6 +225,10 @@
 				Base,
 			);
 			mainGroup = 4DC2C43525F41269005F55D0;
+			packageReferences = (
+				4DC2C47D25F4132B005F55D0 /* XCRemoteSwiftPackageReference "HotKey" */,
+				4DC2C48325F41344005F55D0 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 4DC2C43F25F41269005F55D0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,8 +271,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DC2C44425F41269005F55D0 /* ContentView.swift in Sources */,
 				4DC2C44225F41269005F55D0 /* SwitchRApp.swift in Sources */,
+				4DC2C47925F412D1005F55D0 /* WindowFinderPrivateCaller.m in Sources */,
+				4DC2C47825F412D1005F55D0 /* WindowFinder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +289,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DC2C46025F41270005F55D0 /* SwitchRUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwitchR/SwitchR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -431,6 +442,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = plainpixels.SwitchR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwitchR/SwitchR-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -440,6 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwitchR/SwitchR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -453,6 +467,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = plainpixels.SwitchR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwitchR/SwitchR-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -577,6 +592,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4DC2C47D25F4132B005F55D0 /* XCRemoteSwiftPackageReference "HotKey" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soffes/HotKey";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
+		4DC2C48325F41344005F55D0 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4DC2C47E25F4132B005F55D0 /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DC2C47D25F4132B005F55D0 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+		4DC2C48425F41344005F55D0 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DC2C48325F41344005F55D0 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		4DC2C48625F41344005F55D0 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4DC2C48325F41344005F55D0 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4DC2C43625F41269005F55D0 /* Project object */;
 }
