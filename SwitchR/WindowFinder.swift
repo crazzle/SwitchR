@@ -103,8 +103,8 @@ func captureImage(window: UIWindow?) -> NSImage?{
         return .none
     }
     guard let windowImage: CGImage =
-        CGWindowListCreateImage(.null, .optionIncludingWindow, window.id,
-                                [.boundsIgnoreFraming, .nominalResolution]) else {
+            CGWindowListCreateImage(.null, .optionIncludingWindow, window.id,
+                                    [.boundsIgnoreFraming, .nominalResolution]) else {
         return .none
     }
     return NSImage(cgImage:windowImage, size:NSZeroSize)
