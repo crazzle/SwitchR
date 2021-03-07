@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-typealias UIWindow = (id: CGWindowID, axapp: AXUIElement, axwindow: AXUIElement)
+typealias UIWindow = (id: CGWindowID, axapp: AXUIElement, axwindow: AXUIElement, name: String)
 typealias UIWindowNeighbours = (previous: UIWindow, next: UIWindow)
 typealias UIWindowSelection = (Int, ControlAction, UIWindow?)
 typealias UIWindowSelectable = (Int, ControlAction, Array<UIWindow>)
@@ -23,11 +23,11 @@ class WindowFinder {
     let imageStream: Observable<NSImage?>
     
     init(stream: Observable<ControlAction>) {
-        self.stream = stream
-        self.pickStream = self.stream.filter({$0 != .confirmWindow})
+        self.stream = stream.map({checkAccessibilityTrusted(action: $0)})
+        self.pickStream = self.stream.filter({$0 != .confirm})
             .map({(0, $0, getRelevantWindows())})
-            .scan((0, ControlAction.nextWindow, Optional.none)){select(acc: $0, value: $1)}.map { $0.2 }
-        self.confirmationStream = self.stream.filter({$0 == .confirmWindow})
+            .scan((0, ControlAction.next, Optional.none)){select(acc: $0, value: $1)}.map { $0.2 }
+        self.confirmationStream = self.stream.filter({$0 == .confirm})
         self.imageStream = self.pickStream.map{ captureImage(window: $0)}
         self.confirmationStream.withLatestFrom(self.pickStream)
             .subscribe(onNext: { setFocus(window: $0 )})
@@ -36,17 +36,32 @@ class WindowFinder {
     }
 }
 
+func gotAccess() -> Bool{
+    return AXIsProcessTrusted() && CGPreflightScreenCaptureAccess()
+}
+
+func checkAccessibilityTrusted(action: ControlAction) -> ControlAction{
+    let trusted = gotAccess()
+    switch trusted {
+    case true:
+        return action
+    default:
+        return .abort
+    }
+}
+
 func getRelevantWindows() -> [UIWindow] {
     let apps = NSWorkspace.shared.runningApplications.filter{$0.activationPolicy == .regular}
     let windows: Array<UIWindow> = apps.map{
         let pid = $0.processIdentifier
+        let name = $0.localizedName
         let app = AXUIElementCreateApplication(pid)
         guard let windowsList =  getAXAttribute(container: app, attribute: kAXWindowsAttribute, to: Array<AXUIElement>()) else {
             return Array<UIWindow>()
         }
         return windowsList.map{
             let id = IDFinder.getWindowID($0)
-            return (id, app, $0)
+            return (id, app, $0, name!)
         }
     }.reduce([], +).filter {
         guard let minimized = getAXAttribute(container: $0.axwindow, attribute: kAXMinimizedAttribute, to: Bool()) else {
@@ -57,7 +72,7 @@ func getRelevantWindows() -> [UIWindow] {
         guard let enabled = getAXAttribute(container: $0.axwindow, attribute: kAXEnabledAttribute, to: Bool()) else {
             return true
         }
-        return enabled
+        return !enabled
     }.sorted(by: {$0.id > $1.id})
     return windows
 }
@@ -65,14 +80,14 @@ func getRelevantWindows() -> [UIWindow] {
 func select(acc: UIWindowSelection, value: UIWindowSelectable) -> UIWindowSelection{
     let (lastIndex, _, _) = acc
     let (_, newAction, currentWindows) = value
-    let newIndex : Int = {
+    let nextIndex : Int = {
         switch newAction{
-        case .nextWindow: return lastIndex < currentWindows.count - 1 ? lastIndex + 1 : 0
-        case .previousWindow: return lastIndex > 0 ? lastIndex - 1 : currentWindows.count - 1
+        case .next: return lastIndex < currentWindows.count - 1 ? lastIndex + 1 : 0
+        case .previous: return lastIndex > 0 ? lastIndex - 1 : currentWindows.count - 1
         default: return lastIndex
         }
     }()
-    return currentWindows.isEmpty ? (newIndex, newAction, .none) : (newIndex, newAction, currentWindows[newIndex])
+    return currentWindows.isEmpty ? (nextIndex, newAction, .none) : (nextIndex, newAction, currentWindows[nextIndex])
 }
 
 func setFocus(window: UIWindow?){

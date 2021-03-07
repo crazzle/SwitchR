@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppKit
 import Foundation
 import Cocoa
 import HotKey
@@ -13,9 +14,10 @@ import RxSwift
 import RxRelay
 
 enum ControlAction{
-    case nextWindow
-    case previousWindow
-    case confirmWindow
+    case next
+    case previous
+    case confirm
+    case abort
 }
 
 struct ActiveControlKeys {
@@ -30,9 +32,9 @@ struct ActiveControlKeys {
     }
     
     func register() {
-        next.keyDownHandler = {relay.accept(.nextWindow)}
-        previous.keyDownHandler = {relay.accept(.previousWindow)}
-        confirm.keyDownHandler = {relay.accept(.confirmWindow)}
+        next.keyDownHandler = {relay.accept(.next)}
+        previous.keyDownHandler = {relay.accept(.previous)}
+        confirm.keyDownHandler = {relay.accept(.confirm)}
     }
     
     func stream() -> Observable<ControlAction>{
@@ -70,6 +72,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem.button?.image = NSImage(named: "Icon")
         let statusBarMenu = NSMenu()
         statusBarItem.menu = statusBarMenu
+        if !gotAccess(){
+            let warningItem = NSMenuItem(title: "Missing Permissions!", action: #selector(AppDelegate.togglePermissionsAlert), keyEquivalent: "")
+            warningItem.attributedTitle = NSAttributedString(string: "Missing Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
+            statusBarMenu.addItem(warningItem)
+        }
         statusBarMenu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
     }
     
@@ -77,12 +84,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let popover = NSPopover()
         popover.contentSize = NSSize(width: 560, height: 350)
         popover.behavior = .transient
+        popover.animates = false
         popover.contentViewController = NSHostingController(rootView: EmptyView())
         self.popover = popover
     }
     
     func initializeStreams(){
         windowFinder = WindowFinder(stream: hotkeys.stream())
+        windowFinder.stream
+            .filter({ $0 == .abort })
+            .subscribe(onNext: { a in self.togglePermissionsAlert() })
+            .disposed(by: disposableBag)
         windowFinder.imageStream
             .map { self.resizeNsImage(img: $0) }
             .subscribe(onNext: { self.toggleWithImage(img: $0) })
@@ -117,6 +129,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillResignActive(_ notification: Notification) {
         self.popover.close()
+    }
+    
+    @objc func togglePermissionsAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Missing Permissions"
+        alert.informativeText = "Make sure to enable Accessibility and Screencapturing."
+        alert.alertStyle = NSAlert.Style.warning
+        alert.runModal()
     }
     
     @objc func quit() {
