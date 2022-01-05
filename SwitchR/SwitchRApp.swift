@@ -86,10 +86,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             warningItem.attributedTitle = NSAttributedString(string: "Missing Screen Capturing Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
             statusBarMenu.addItem(warningItem)
         }
-        statusBarMenu.addItem(withTitle: "Previous", action: #selector(AppDelegate.triggerPrevious), keyEquivalent: "P")
-        statusBarMenu.addItem(withTitle: "Next", action: #selector(AppDelegate.triggerNext), keyEquivalent: "N")
-        statusBarMenu.addItem(withTitle: "Confirm", action: #selector(AppDelegate.triggerConfirm), keyEquivalent: "C")
+       
+        let previous = NSMenuItem(title: "Previous", action: #selector(AppDelegate.triggerPrevious), keyEquivalent: "p")
+        previous.keyEquivalentModifierMask = [.control, .option]
+        statusBarMenu.addItem(previous)
+        
+        let next = NSMenuItem(title: "Next", action: #selector(AppDelegate.triggerNext), keyEquivalent: "n")
+        next.keyEquivalentModifierMask = [.control, .option]
+        statusBarMenu.addItem(next)
+        
+        let confirm = NSMenuItem(title: "Confirm", action: #selector(AppDelegate.triggerConfirm), keyEquivalent: "c")
+        confirm.keyEquivalentModifierMask = [.control, .option]
+        statusBarMenu.addItem(confirm)
+        
         statusBarMenu.addItem(NSMenuItem.separator())
+        
         statusBarMenu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
     }
     
