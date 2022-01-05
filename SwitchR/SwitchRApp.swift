@@ -72,9 +72,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem.button?.image = NSImage(named: "Icon")
         let statusBarMenu = NSMenu()
         statusBarItem.menu = statusBarMenu
-        if !gotAccess(){
-            let warningItem = NSMenuItem(title: "Missing Permissions!", action: #selector(AppDelegate.togglePermissionsAlert), keyEquivalent: "")
-            warningItem.attributedTitle = NSAttributedString(string: "Missing Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
+        if !gotAXIAccess(){
+            let warningItem = NSMenuItem(title: "Missing Accessibility Permissions!", action: #selector(AppDelegate.togglePermissionsAlert), keyEquivalent: "")
+            warningItem.attributedTitle = NSAttributedString(string: "Missing Accessibility Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
+            statusBarMenu.addItem(warningItem)
+        }
+        if !gotCaptureAccess(){
+            let warningItem = NSMenuItem(title: "Missing Screen Capturing Permissions!", action: #selector(AppDelegate.togglePermissionsAlert), keyEquivalent: "")
+            warningItem.attributedTitle = NSAttributedString(string: "Missing Screen Capturing Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
             statusBarMenu.addItem(warningItem)
         }
         statusBarMenu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
@@ -82,8 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func initializePopover(){
         let popover = NSPopover()
-        popover.contentSize = NSSize(width: 560, height: 350)
-        popover.behavior = .transient
+        popover.behavior = .semitransient
         popover.animates = false
         popover.contentViewController = NSHostingController(rootView: EmptyView())
         self.popover = popover
@@ -96,18 +100,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .subscribe(onNext: { a in self.togglePermissionsAlert() })
             .disposed(by: disposableBag)
         windowFinder.imageStream
-            .map { self.resizeNsImage(img: $0) }
-            .subscribe(onNext: { self.toggleWithImage(img: $0) })
+            .map { (self.resizeNsImage(img: $0.0), $0.1, $0.2) }
+            .subscribe(onNext: { self.toggleWithImageAndText(img: $0.0, name: $0.1, title: $0.2 ) })
             .disposed(by: disposableBag)
         windowFinder.confirmationStream
             .subscribe(onNext: {self.popover.performClose($0)}).disposed(by: disposableBag)
     }
     
-    func toggleWithImage(img: NSImage?){
+    func toggleWithImageAndText(img: NSImage?, name: String, title: String){
         if let img = img {
             NSApp.activate(ignoringOtherApps: true)
             if let button = self.statusBarItem.button {
-                self.popover.contentViewController!.view = NSImageView(image: img)
+                let width = img.size.width
+                let height = img.size.height
+                let textView = NSTextField(labelWithString: "\(name) - \(title)")
+                let gridView = NSGridView(views: [[textView],[NSImageView(image: img)]])
+                gridView.row(at: 0).topPadding = 10
+                gridView.row(at: 0).bottomPadding = 5
+                gridView.row(at: 0).cell(at: 0).xPlacement = .center
+                self.popover.contentViewController!.view = gridView
+                self.popover.contentSize = NSSize(width: width, height: height)
                 self.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
@@ -115,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func resizeNsImage(img: NSImage?) -> NSImage? {
         guard let img = img else { return .none }
-        let destSize = NSMakeSize(CGFloat(560), CGFloat(350))
+        let destSize = NSMakeSize(CGFloat(img.size.width/2), CGFloat(img.size.height/2))
         let newImage = NSImage(size: destSize)
         newImage.lockFocus()
         img.draw(in: NSMakeRect(0, 0, destSize.width, destSize.height),
