@@ -41,6 +41,10 @@ struct ActiveControlKeys {
         return relay.asObservable()
     }
     
+    func trigger(cmd: ControlAction){
+        relay.accept(cmd)
+    }
+    
 }
 
 @main
@@ -82,6 +86,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             warningItem.attributedTitle = NSAttributedString(string: "Missing Screen Capturing Permissions!", attributes: [NSAttributedString.Key.foregroundColor: NSColor.red])
             statusBarMenu.addItem(warningItem)
         }
+        statusBarMenu.addItem(withTitle: "Previous", action: #selector(AppDelegate.triggerPrevious), keyEquivalent: "P")
+        statusBarMenu.addItem(withTitle: "Next", action: #selector(AppDelegate.triggerNext), keyEquivalent: "N")
+        statusBarMenu.addItem(withTitle: "Confirm", action: #selector(AppDelegate.triggerConfirm), keyEquivalent: "C")
+        statusBarMenu.addItem(NSMenuItem.separator())
         statusBarMenu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
     }
     
@@ -149,6 +157,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.informativeText = "Make sure to enable Accessibility and Screencapturing."
         alert.alertStyle = NSAlert.Style.warning
         alert.runModal()
+    }
+    
+    
+    @objc func triggerNext(){
+        hotkeys.trigger(cmd: .next)
+    }
+    
+    @objc func triggerPrevious(){
+        hotkeys.trigger(cmd: .previous)
+    }
+    
+    @objc func triggerConfirm(){
+        hotkeys.trigger(cmd: .confirm)
     }
     
     @objc func quit() {
