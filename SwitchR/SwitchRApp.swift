@@ -95,7 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         next.keyEquivalentModifierMask = [.control, .option]
         statusBarMenu.addItem(next)
         
-        let confirm = NSMenuItem(title: "Confirm", action: #selector(AppDelegate.triggerConfirm), keyEquivalent: "c")
+        let confirm = NSMenuItem(title: "Confirm", action: #selector(AppDelegate.triggerConfirm), keyEquivalent: "\r")
         confirm.keyEquivalentModifierMask = [.control, .option]
         statusBarMenu.addItem(confirm)
         
