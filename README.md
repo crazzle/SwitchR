@@ -6,7 +6,7 @@ SwitchR is a window switching app that switches the focus through active windows
 SwitchR supports macOS v11+.
 
 ## Installation
-TBD
+Download the app from [here](https://github.com/crazzle/SwitchR/releases/download/0.3/SwitchR.app.zip) and move it into your application folder.
 
 ## How to use SwitchR
 SwitchR resides completely in the menubar. There are three commands to control the window focus:
